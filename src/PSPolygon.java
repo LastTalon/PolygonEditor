@@ -1,40 +1,50 @@
 import java.awt.Polygon;
 import java.awt.geom.Line2D;
-import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class PSPolygon extends Polygon {
+public class PSPolygon {
 	public static int POLY_VERTEX = 0;
 	public static int POLY_EDGE = 1;
 	public static int POLY_FACE = 2;
 	public static int POLY_NONE;
+	
+	public List<Point2D> points;
 	public int width;
 	
 	public PSPolygon() {
-		super();
+		points = new ArrayList<Point2D>();
 		width = 0;
 	}
 	
-	public PSPolygon(int[] xpoints, int[] ypoints, int npoints) {
-		super(xpoints, ypoints, npoints);
+	public PSPolygon(int[] xpoints, int[] ypoints) {
+		points = new ArrayList<Point2D>();
 		width = 0;
+		int npoints = xpoints.length;
+		if (npoints == ypoints.length)
+			for (int i = 0; i < npoints; i++)
+				points.add(new Point2D.Float(xpoints[i], ypoints[i]));
 	}
 	
 	public PSPolygon(int w) {
-		super();
+		points = new ArrayList<Point2D>();
 		width = w;
 	}
 	
-	public PSPolygon(int[] xpoints, int[] ypoints, int npoints, int w) {
-		super(xpoints, ypoints, npoints);
+	public PSPolygon(int[] xpoints, int[] ypoints, int w) {
 		width = w;
+		int npoints = xpoints.length;
+		if (npoints == ypoints.length)
+			for (int i = 0; i < npoints; i++)
+				points.add(new Point2D.Float(xpoints[i], ypoints[i]));
 	}
 	
 	public int intersect(Point2D p) {
 		PathIterator itr = getPathIterator(null);
 		double[] coords = null;
-		while (!itr.isDone()) {
+	)	while (!itr.isDone()) {
 			itr.currentSegment(coords);
 			if (p.distance(coords[0], coords[1]) <= width)
 				return POLY_VERTEX;
