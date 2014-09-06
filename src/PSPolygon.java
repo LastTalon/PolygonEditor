@@ -1,4 +1,3 @@
-import java.awt.Polygon;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -6,10 +5,10 @@ import java.util.List;
 
 
 public class PSPolygon {
-	public static int POLY_VERTEX = 0;
-	public static int POLY_EDGE = 1;
-	public static int POLY_FACE = 2;
-	public static int POLY_NONE;
+	public static final int POLY_NONE = 0;
+	public static final int POLY_VERTEX = 1;
+	public static final int POLY_EDGE = 2;
+	public static final int POLY_FACE = 3;
 	
 	public List<Point2D> points;
 	public int width;
@@ -41,10 +40,33 @@ public class PSPolygon {
 				points.add(new Point2D.Float(xpoints[i], ypoints[i]));
 	}
 	
+	private boolean intersectPolygon(Point2D p) {
+		return false;
+	}
+	
+	private Line2D intersectLine(Point2D p) {
+		return null;
+	}
+	
+	private Point2D intersectPoint(Point2D p) {
+		return null;
+	}
+	
+	public int intersects(Point2D p) {
+		if (intersectPoint(p) != null)
+			return POLY_VERTEX;
+		if (intersectLine(p) != null)
+			return POLY_EDGE;
+		if (intersectPolygon(p))
+			return POLY_FACE;
+		return POLY_NONE;
+	}
+	
+	/*
 	public int intersect(Point2D p) {
 		PathIterator itr = getPathIterator(null);
 		double[] coords = null;
-	)	while (!itr.isDone()) {
+		while (!itr.isDone()) {
 			itr.currentSegment(coords);
 			if (p.distance(coords[0], coords[1]) <= width)
 				return POLY_VERTEX;
@@ -71,4 +93,5 @@ public class PSPolygon {
 		
 		return POLY_NONE;
 	}
+	*/
 }
