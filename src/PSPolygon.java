@@ -1,6 +1,7 @@
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -49,6 +50,13 @@ public class PSPolygon {
 	}
 	
 	private Point2D intersectPoint(Point2D p) {
+		Iterator<Point2D> itr = points.iterator();
+		Point2D temp;
+		while (itr.hasNext()) {
+			temp = itr.next();
+			if (p.distance(temp) <= width)
+				return temp;
+		}
 		return null;
 	}
 	
